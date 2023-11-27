@@ -38,7 +38,7 @@ function EmulationApp() {
     useEffect(() => {
       const timerId = setTimeout(() => {
         setVisibleComponent(<App />);
-      }, 2000);
+      }, 3000);
 
       return () => {
         clearTimeout(timerId);
