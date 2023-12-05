@@ -1,17 +1,15 @@
-import './Search.css'
-
+import * as Styled from "./SearchStyle.js";
 function Search () {
-   return (
-        <div className="centerblock__search search">
-              <svg className="search__svg">
-                <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
-              </svg>
-              <input
-                className="search__text"
-                type="search"
-                placeholder="Поиск"
-                name="search" />
-            </div>
-    );
+  return(
+  <Styled.CenterblockSearch>
+  <Styled.SearchSvg>
+  <use xlinkHref="/icon/sprite.svg#icon-search"></use>
+  </Styled.SearchSvg>
+  <Styled.SearchText
+    type="search"
+    placeholder="Поиск"
+    name="search" />
+</Styled.CenterblockSearch>
+);
 }
 export default Search;

@@ -1,10 +1,5 @@
-a {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-}
-
-.centerblock__filter {
+import { styled } from "styled-components";
+export const CenterblockFilter = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -17,17 +12,17 @@ a {
   align-items: center;
   margin-bottom: 51px;
   gap: 10px;
-}
+`;
 
-.filter__title {
+export const FilterTitle = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   margin-right: 15px;
-}
+`;
 
-.filter__button {
+export const FilterButton = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -37,26 +32,20 @@ a {
   padding: 6px 20px;
   text-align: center;
   position: relative;
-}
+  border-color: ${(props) => (props.isOpen ? "#ad61ff" : "")};
+  color: ${(props) => (props.isOpen ? "#ad61ff" : "")};
+  &:hover {
+    border-color: #d9b6ff;
+    color: #d9b6ff;
+    cursor: pointer;
+  }
+  &:active {
+    border-color: #ad61ff;
+    color: #ad61ff;
+    cursor: pointer;
+`;
 
-._btn-text:hover {
-  border-color: #d9b6ff;
-  color: #d9b6ff;
-  cursor: pointer;
-}
-
-._btn-text:active {
-  border-color: #ad61ff;
-  color: #ad61ff;
-  cursor: pointer;
-}
-
-.filter-active-button {
-  border-color: #ad61ff;
-  color: #ad61ff;
-}
-
-.filter-popup {
+export const FilterPopup = styled.div`
   margin-top: 10px;
   width: 248px;
   height: 305px;
@@ -70,14 +59,13 @@ a {
   line-height: 24px;
   overflow-y: auto;
   position: absolute;
-}
+  .filter-popup div:hover {
+    color: #b672ff;
+    text-decoration-line: underline;
+  }
+`;
 
-.filter-popup li:hover {
-  color: #b672ff;
-  text-decoration-line: underline;
-}
-
-.filter-popup-scrollable {
+export const FilterPopupScrollable = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -86,18 +74,17 @@ a {
   padding: 0;
   max-height: 237px;
 
-  scrollbar-color: #ffffff #4b4949;
-  scrollbar-width: thin;
-}
+  scrollbar-color: #ffffff #4b4949; /* Для Firefox */
+  scrollbar-width: thin; /* Для Firefox */
 
-.filter-popup-scrollable::-webkit-scrollbar {
-  width: 4px;
-}
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
 
-.filter-popup-scrollable::-webkit-scrollbar-thumb {
-  background-color: #ffffff;
-}
-
-.filter-popup-scrollable::-webkit-scrollbar-track {
-  background-color: #4b4949; 
-}
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #4b4949;
+  }
+`;
