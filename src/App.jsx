@@ -20,7 +20,7 @@ function App() {
             <Filters />
             <Tracklist />
           </div>
-          <Sidebar />
+<Sidebar />
         </S.Main>
         <AudioPlayer />
         <footer></footer>
@@ -28,5 +28,4 @@ function App() {
     </S.Wrapper>
   );
 }
-
 export default App;

@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+
 export const CenterblockFilter = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
@@ -73,14 +74,11 @@ export const FilterPopupScrollable = styled.div`
   list-style: none;
   padding: 0;
   max-height: 237px;
-
   scrollbar-color: #ffffff #4b4949; /* Для Firefox */
   scrollbar-width: thin; /* Для Firefox */
-
   &::-webkit-scrollbar {
     width: 4px;
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: #ffffff;
   }
