@@ -1,7 +1,4 @@
-import "../Tracklist/Tracklist.css";
-import "../Sidebar/Sidebar.css";
-import "../AudioPlayer/AudioPlayer.css";
-import "./Emulation.css"
+
 
 function EmulationTracklist () {
     return (

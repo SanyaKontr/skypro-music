@@ -1,21 +1,21 @@
-import './Sidebar.css'
+import * as Styled from './Sidebar.js'
 import Playlists from './Playlists.jsx';
 
 function Sidebar() {
     return (
-<div className="main__sidebar sidebar">
-            <div className="sidebar__personal">
-              <p className="sidebar__personal-name">Sergey.Ivanov</p>
-              <div className="sidebar__icon">
-                <svg alt="logout">
-                <use xlinkHref="/img/icon/sprite.svg#logout"></use>
-                </svg>
-              </div>
-            </div>
-            <Playlists />
-          </div>
+<Styled.MainSidebar>
+      <Styled.SidebarPersonal>
+        <Styled.SidebarPersonalName>Sergey.Ivanov</Styled.SidebarPersonalName>
+        <Styled.SidebarIcon>
+          <svg alt="logout">
+            <use xlinkHref="/icon/sprite.svg#logout"></use>
+          </svg>
+          </Styled.SidebarIcon>
+      </Styled.SidebarPersonal>
+      <Playlists />
+    </Styled.MainSidebar>
 
-    );
+  );
 }
 
 export default Sidebar;

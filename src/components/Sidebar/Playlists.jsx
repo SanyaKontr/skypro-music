@@ -1,35 +1,33 @@
-import './Playlists.css'
+import * as Styled from './PlaylistsStyle.js'
 
 function Playlists() {
   return  (
-        <div className="sidebar__block">
-              <div className="sidebar__list">
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
-                      src="img/playlist01.png"
-                      alt="day's playlist" />
-                  </a>
-                </div>
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
+    <Styled.SidebarBlock>
+    <Styled.SidebarList>
+      <Styled.SidebarItem>
+        <Styled.SidebarLink href="#">
+          <Styled.SidebarImg
+            src="img/playlist01.png"
+            alt="day's playlist" />
+              </Styled.SidebarLink>
+                </Styled.SidebarItem>
+                <Styled.SidebarItem>
+                  <Styled.SidebarLink href="#">
+                    <Styled.SidebarImg
                       src="img/playlist02.png"
                       alt="day's playlist" />
-                  </a>
-                </div>
-                <div className="sidebar__item">
-                  <a className="sidebar__link" href="#">
-                    <img
-                      className="sidebar__img"
+                         </Styled.SidebarLink>
+                </Styled.SidebarItem>
+                <Styled.SidebarItem>
+                  <Styled.SidebarLink href="#">
+                    <Styled.SidebarImg
                       src="img/playlist03.png"
                       alt="day's playlist" />
-                  </a>
-                </div>
-              </div>
-            </div>
+                      
+                      </Styled.SidebarLink>
+                </Styled.SidebarItem>
+              </Styled.SidebarList>
+            </Styled.SidebarBlock>
     )
 }
 export default Playlists;
