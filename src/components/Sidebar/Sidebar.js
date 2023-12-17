@@ -38,6 +38,7 @@ export const SidebarIcon = styled.div`
   border-radius: 50%;
   cursor: pointer;
 `;
+
 export const SidebarBlock = styled.div`
   height: 100%;
   padding: 240px 0 0 0;

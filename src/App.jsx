@@ -1,31 +1,27 @@
-import { GlobalStyle } from "./App.styles.js";
+import { useState } from "react";
 import * as S from "./App.styles.js";
-import AudioPlayer from './components/AudioPlayer/AudioPlayer.jsx';
-import NavMenu from './components/NavMenu/NavMenu.jsx';
-import Sidebar from './components/Sidebar/Sidebar.jsx';
-import Tracklist from './components/Tracklist/Tracklist.jsx';
-import Search from './components/Search/Search.jsx';
-import Filters from './components/Filters/Filters.jsx';
+import { GlobalStyle } from "./App.styles.js";
+import { AppRoutes } from "./routes.jsx";
 
 function App() {
+  const getDataFromLS = () => {
+  const data = localStorage. getItem("user");
+  if (data) {
+  return JSON.parse (data);
+  }
+  return null;
+  };
+  const [user, setUser] = useState (getDataFromLS ()) ;
+
   return (
-    <S.Wrapper>
+    <>
       <GlobalStyle />
-      <S.Container>
-        <S.Main>
-          <NavMenu />
-          <div>
-            <Search />
-            <S.CenterblockH2>Треки</S.CenterblockH2>
-            <Filters />
-            <Tracklist />
-          </div>
-<Sidebar />
-        </S.Main>
-        <AudioPlayer />
-        <footer></footer>
-      </S.Container>
-    </S.Wrapper>
+      <S.Wrapper>
+        <S.Container>
+          <AppRoutes user={user} setUser={setUser} />
+        </S.Container>
+      </S.Wrapper>
+    </>
   );
 }
 export default App;

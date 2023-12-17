@@ -1,4 +1,5 @@
 import * as S from "./AudioPlayerStyle.js";
+
 function AudioPlayer() {
   return (
     <S.Bar>
@@ -33,6 +34,7 @@ function AudioPlayer() {
                 </S.PlayerBtnShuffleSvg>
               </S.PlayerBtnShuffle>
             </S.PlayerControls>
+
             <S.PlayerTrackPlay>
               <S.TrackPlayContain>
                 <S.TrackPlayImage>
@@ -51,6 +53,7 @@ function AudioPlayer() {
                   </S.TrackPlayAlbumLink>
                 </S.TrackPlayAlbum>
               </S.TrackPlayContain>
+
               <S.TrackPlayLikeDis>
                 <S.TrackPlayLike>
                   <S.TrackPlayLikeSvg alt="like">

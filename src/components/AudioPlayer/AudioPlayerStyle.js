@@ -6,9 +6,9 @@ export const Bar = styled.div`
   left: 0;
   width: 100%;
   background: rgba(28, 28, 28, 0.5);
-  `;
+`;
 
-  export const BarContent = styled.div`
+export const BarContent = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
@@ -84,7 +84,6 @@ export const PlayerTrackPlay = styled.div`
   flex-direction: row;
 `;
 
-
 export const PlayerBtnPrev = styled.div`
   padding: 5px;
   display: -webkit-box;
@@ -117,7 +116,7 @@ export const PlayerBtnPlaySvg = styled.svg`
   height: 20px;
   fill: #d9d9d9;
 `;
-  
+
 export const PlayerBtnNext = styled.div`
   padding: 5px;
   display: -webkit-box;
@@ -129,7 +128,6 @@ export const PlayerBtnNext = styled.div`
   margin-right: 28px;
   fill: #a53939;
 `;
-  
 
 export const PlayerBtnNextSvg = styled.svg`
   width: 15px;
@@ -172,13 +170,12 @@ export const PlayerBtnShuffle = styled.div`
   align-items: center;
 `;
 
-
 export const PlayerBtnShuffleSvg = styled.svg`
   width: 19px;
   height: 12px;
   fill: transparent;
   stroke: #696969;
-  `;
+`;
 
 export const TrackPlayContain = styled.div`
   width: auto;
@@ -269,16 +266,17 @@ export const TrackPlayLike = styled.div`
 `;
 
 export const TrackPlayLikeSvg = styled.svg`
-width: 14px;
-height: 12px;
-fill: transparent;
-stroke: #696969;
+  width: 14px;
+  height: 12px;
+  fill: transparent;
+  stroke: #696969;
 `;
 
 export const TrackPlayDislike = styled.div`
-margin-left: 28.5px;
-padding: 5px;
+  margin-left: 28.5px;
+  padding: 5px;
 `;
+
 export const TrackPlayDislikeSvg = styled.svg`
   width: 14.34px;
   height: 13px;
