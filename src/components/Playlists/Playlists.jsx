@@ -1,31 +1,21 @@
 import * as Styled from './PlaylistsStyle.js'
-
+import { Categories } from "../../constants.js";
 function Playlists() {
   return  (
-    <Styled.SidebarBlock>
-    <Styled.SidebarList>
-      <Styled.SidebarItem>
-        <Styled.SidebarLink href="#">
-          <Styled.SidebarImg
-            src="img/playlist01.png"
-            alt="day's playlist" />
-              </Styled.SidebarLink>
-                </Styled.SidebarItem>
-                <Styled.SidebarItem>
-                  <Styled.SidebarLink href="#">
-                    <Styled.SidebarImg
-                      src="img/playlist02.png"
-                      alt="day's playlist" />
-                         </Styled.SidebarLink>
-                </Styled.SidebarItem>
-                <Styled.SidebarItem>
-                  <Styled.SidebarLink href="#">
-                    <Styled.SidebarImg
-                      src="img/playlist03.png"
-                      alt="day's playlist" />
-                      
-                      </Styled.SidebarLink>
-                </Styled.SidebarItem>
+        <Styled.SidebarBlock>
+              <Styled.SidebarList>
+              {Categories.map((category) => {
+            return (
+              <Styled.SidebarItem key={category.id}>
+                <Styled.SidebarLink
+                  id={category.id}
+                  to={`/category/${category.id}`}
+                >
+                  <Styled.SidebarImg src={category.img} alt={category.alt} />
+                </Styled.SidebarLink>
+              </Styled.SidebarItem>
+            );
+          })}
               </Styled.SidebarList>
             </Styled.SidebarBlock>
     )
