@@ -13,7 +13,7 @@ import{ PropTypes } from "prop-types";
 export const AppRoutes = ({ user, setUser }) => {
   return (
     <Routes>
-      <Route element={<ProtectedRoute isAllowed={Boolean(setUser)} />}>
+      <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
  
      <Route path="/category/:id" element={<Category />} />
         <Route path="/favorites" element={<Favorites />} />
