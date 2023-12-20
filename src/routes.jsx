@@ -15,13 +15,13 @@ export const AppRoutes = ({ user, setUser }) => {
     <Routes>
       <Route element={<ProtectedRoute isAllowed={Boolean(setUser)} />}>
  
+     <Route path="/category/:id" element={<Category />} />
+        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/" element={<Main />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
       <Route path="/registration" element={<Registration />} />
-      </Route>
-      <Route path="/category/:id" element={<Category />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/" element={<Main />} />
     </Routes>
   );
 };
