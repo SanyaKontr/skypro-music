@@ -1,10 +1,17 @@
 import { styled } from "styled-components";
 
 export const Bar = styled.div`
-  position: absolute;
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  max-width: 1920px;
+  box-sizing: border-box;
+  position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  right: 50%;
   width: 100%;
+  transform: translate(-50%, -50%);
   background: rgba(28, 28, 28, 0.5);
 `;
 

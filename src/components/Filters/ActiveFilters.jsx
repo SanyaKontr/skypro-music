@@ -8,7 +8,7 @@ const OpenFilter = ({ buttonText, listItems, isOpen, toggleFilter }) => {
 
   return (
     <div>
-      <S.FilterButton isOpen={isOpen} onClick={handleClick}>
+   <S.FilterButton $isOpen={isOpen} onClick={handleClick}>
         {buttonText}
       </S.FilterButton>
       {isOpen && (
