@@ -1,7 +1,7 @@
 import * as Styled from './Sidebar.js'
 import Playlists from '../Playlists/Playlists.jsx';
 
-function Sidebar() {
+function Sidebar({loading}) {
   return (
     <Styled.MainSidebar>
       <Styled.SidebarPersonal>
@@ -12,7 +12,8 @@ function Sidebar() {
           </svg>
         </Styled.SidebarIcon>
       </Styled.SidebarPersonal>
-      <Playlists />
+      <Playlists 
+      loading={loading}/>
     </Styled.MainSidebar>
 
   );

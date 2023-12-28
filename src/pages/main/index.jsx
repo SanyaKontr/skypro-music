@@ -12,7 +12,7 @@ import { getAllTracks } from "../../Api.js";
 
 export const Main = () => {
   const [showBar, setShowBar] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [tracks, setTracks] = useState(true);
   const [tracksError, setTracksError] = useState(true);
 
@@ -20,22 +20,20 @@ export const Main = () => {
     setShowBar(track);
   };
   useEffect(() => {
+    setLoading(true);
     getAllTracks()
       .then((tracks) => {
         setTracks(tracks);
         console.log(tracks);
-        setLoading(false);
       })
       .catch((error) => {
         setTracksError(
           `Не удалось загрузить плейлист, попробуйте позже: ${error.message}`
         );
-      });
+      }).finally(() => setLoading(false))
   }, []);
 
-  return loading ? (
-    <EmulationApp />
-  ) : (
+  return  (
     <S.Wrapper>
       <GlobalStyle />
       <S.Container>
@@ -46,12 +44,14 @@ export const Main = () => {
             <S.CenterblockH2>Треки</S.CenterblockH2>
             <Filters />
             <Tracklist
+            loading = {loading}
               handleTrackPlay={handleTrackPlay}
               tracks={tracks}
               tracksError={tracksError}
             />
           </div>
-          <Sidebar />
+          <Sidebar 
+          loading={loading}/>
         </S.Main>
         {showBar ? (
           <AudioPlayer track={showBar} setShowBar={setShowBar} />
