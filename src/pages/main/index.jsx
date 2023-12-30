@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "../../App.styles.js";
 import { GlobalStyle } from "../../App.styles.js";
 import AudioPlayer from "../../components/AudioPlayer/AudioPlayer.jsx";
@@ -9,55 +9,81 @@ import Sidebar from "../../components/Sidebar/Sidebar.jsx";
 import Tracklist from "../../components/Tracklist/Tracklist.jsx";
 import { EmulationApp } from "../../components/Emulation/EmulationApp.jsx";
 import { getAllTracks } from "../../Api.js";
+import { handleStart, handleStop, handleTrackPlay } from "../../components/AudioPlayer/AudioPlayer.jsx";
 
 export const Main = () => {
-  const [showBar, setShowBar] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [tracks, setTracks] = useState(true);
-  const [tracksError, setTracksError] = useState(true);
+  const [showAudioPlayer, setShowAudioPlayer] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [tracks, setTracks] = useState(true); 
+  const [tracksError, setTracksError] = useState(true); 
+  const [isPlaying, setIsPlaying] = useState(false); 
+  const audioRef = useRef(null);
 
-  const handleTrackPlay = (track) => {
-    setShowBar(track);
-  };
-  useEffect(() => {
-    setLoading(true);
-    getAllTracks()
-      .then((tracks) => {
-        setTracks(tracks);
-        console.log(tracks);
-      })
-      .catch((error) => {
-        setTracksError(
-          `Не удалось загрузить плейлист, попробуйте позже: ${error.message}`
-        );
-      }).finally(() => setLoading(false))
-  }, []);
 
-  return  (
-    <S.Wrapper>
-      <GlobalStyle />
-      <S.Container>
-        <S.Main>
-          <NavMenu />
-          <div>
-            <Search />
-            <S.CenterblockH2>Треки</S.CenterblockH2>
-            <Filters />
-            <Tracklist
-            loading = {loading}
-              handleTrackPlay={handleTrackPlay}
-              tracks={tracks}
-              tracksError={tracksError}
-            />
-          </div>
-          <Sidebar 
-          loading={loading}/>
+const handleStart = () => {
+  console.log("handleStart");
+  audioRef.current.play();
+  setIsPlaying(true);
+};
+
+const handleStop = () => {
+  audioRef.current.pause();
+  setIsPlaying(false);
+};
+
+const handleTrackPlay = (track) => {
+  console.log("handleTrackPlay");
+  setShowAudioPlayer(track);
+};
+
+useEffect(() => {
+  getAllTracks()
+    .then((tracks) => {
+      setTracks(tracks);
+      setLoading(false);
+    })
+    .catch((error) => {
+      setTracksError(
+        `Не удалось загрузить плейлист, попробуйте позже: ${error.message}`
+      );
+    })
+    .finally(() => setLoading(false));
+}, []);
+
+return loading ? (
+  <EmulationApp />
+) : (
+  <S.Wrapper>
+    <GlobalStyle />
+    <S.Container>
+      <S.Main>
+        <NavMenu />
+        <div>
+          <Search />
+          <S.CenterblockH2>Треки</S.CenterblockH2>
+          <Filters />
+          <Tracklist
+            handleTrackPlay={handleTrackPlay}
+            tracks={tracks}
+            tracksError={tracksError}
+          />
+        </div>
+        <Sidebar tracks={tracks} />
         </S.Main>
-        {showBar ? (
-          <AudioPlayer track={showBar} setShowBar={setShowBar} />
+        {showAudioPlayer ? (
+          <AudioPlayer
+            track={showAudioPlayer}
+            handleTrackPlay={handleTrackPlay}
+            setShowBar={setShowAudioPlayer}
+            setIsPlaying={setIsPlaying}
+            handleStart={handleStart}
+            handleStop={handleStop}
+            isPlaying={isPlaying}
+            audioRef={audioRef}
+          />
         ) : null}
         <footer></footer>
       </S.Container>
     </S.Wrapper>
-    );
-  };
+  );
+};

@@ -12,8 +12,16 @@ export const Bar = styled.div`
   right: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
-  background: rgba(28, 28, 28, 0.5);
+  
 `;
+export const TrackTime = styled.div`
+  color: #696969;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: flex-end;
+  `;
+
 
 export const BarContent = styled.div`
   position: absolute;
@@ -24,9 +32,19 @@ export const BarContent = styled.div`
 `;
 
 export const BarPlayerProgress = styled.div`
+position: relative;
   width: 100%;
-  height: 5px;
+  height: 8px;
   background: #2e2e2e;
+  cursor: pointer;
+`;
+
+export const BarPlayerProgressLoad = styled.div`
+  position: absolute;
+  top: 1px;
+  left: 0;
+  height: 8px;
+  background: #b672ff;
 `;
 
 export const BarPlayerBlock = styled.div`
@@ -41,6 +59,7 @@ export const BarPlayerBlock = styled.div`
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  background: rgba(28, 28, 28, 0.5);
 `;
 
 export const BarPlayer = styled.div`
@@ -100,6 +119,7 @@ export const PlayerBtnPrev = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 23px;
+  cursor: pointer;
 `;
 
 export const PlayerBtnPrevSvg = styled.svg`
@@ -116,6 +136,7 @@ export const PlayerBtnPlay = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 23px;
+  cursor: pointer;
 `;
 
 export const PlayerBtnPlaySvg = styled.svg`
@@ -134,6 +155,7 @@ export const PlayerBtnNext = styled.div`
   align-items: center;
   margin-right: 28px;
   fill: #a53939;
+  cursor: pointer;
 `;
 
 export const PlayerBtnNextSvg = styled.svg`
@@ -152,13 +174,20 @@ export const PlayerBtnRepeat = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const PlayerBtnRepeatSvg = styled.svg`
   width: 18px;
   height: 12px;
   fill: transparent;
-  stroke: #696969;
+  stroke: ${(props) => (props.$isLooped ? "#fff" : "#696969")};
+  &:hover {
+    stroke: ${(props) => (props.$isLooped ? "#fff" : "#acacac")};
+  }
+  &:active {
+    stroke: #fff;
+  }
 `;
 
 export const PlayerBtnShuffle = styled.div`
@@ -175,6 +204,7 @@ export const PlayerBtnShuffle = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const PlayerBtnShuffleSvg = styled.svg`
@@ -182,6 +212,9 @@ export const PlayerBtnShuffleSvg = styled.svg`
   height: 12px;
   fill: transparent;
   stroke: #696969;
+  &:hover {
+    stroke: #acacac;
+  }
 `;
 
 export const TrackPlayContain = styled.div`
@@ -270,18 +303,23 @@ export const TrackPlayLikeDis = styled.div`
 
 export const TrackPlayLike = styled.div`
   padding: 5px;
-`;
+  cursor: pointer;
+  `;
 
 export const TrackPlayLikeSvg = styled.svg`
   width: 14px;
   height: 12px;
   fill: transparent;
   stroke: #696969;
+  &:hover {
+    stroke: #acacac;
+  }
 `;
 
 export const TrackPlayDislike = styled.div`
   margin-left: 28.5px;
   padding: 5px;
+  cursor: pointer;
 `;
 
 export const TrackPlayDislikeSvg = styled.svg`
@@ -289,6 +327,9 @@ export const TrackPlayDislikeSvg = styled.svg`
   height: 13px;
   fill: transparent;
   stroke: #696969;
+  &:hover {
+    stroke: #acacac;
+  }
 `;
 
 export const VolumeContent = styled.div`
@@ -305,6 +346,7 @@ export const VolumeContent = styled.div`
   -webkit-box-pack: flex-end;
   -ms-flex-pack: flex-end;
   justify-content: flex-end;
+  cursor: pointer;
 `;
 
 export const VolumeImage = styled.div`
@@ -321,8 +363,14 @@ export const VolumeSvg = styled.svg`
 
 export const VolumeProgress = styled.div`
   width: 109px;
+  cursor: pointer;
 `;
 
 export const VolumeProgressLine = styled.input`
   width: 109px;
+  cursor: pointer;
+  `;
+  
+  export const StandartAudioPlayer = styled.audio`
+    display: none;
 `;
