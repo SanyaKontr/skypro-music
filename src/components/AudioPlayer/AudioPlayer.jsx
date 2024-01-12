@@ -36,11 +36,6 @@ function AudioPlayer({
     audioRef.current.load();
   }, [track]);
 
-  useEffect(() => {
-    audioRef.current.addEventListener("loadedmetadata", () => {
-      handleStart();
-    });
-  }, []);
 
   useEffect(() => {
     const updateCurrentTime = () => {
@@ -96,7 +91,7 @@ function AudioPlayer({
   const toggleLoop = isLooped ? handleUnloop : handleLoop;
   return (
   <>
-      <S.StandartAudioPlayer controls ref={audioRef}>
+      <S.StandartAudioPlayer controls ref={audioRef} onLoadedMetadata={handleStart}>
         <source src={track.track_file} type="audio/mpeg" />
       </S.StandartAudioPlayer>
       <S.Bar>
@@ -210,18 +205,5 @@ function AudioPlayer({
     </>
   );
 }
-
-AudioPlayer.propTypes = {
-  track: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    track_file: PropTypes.string.isRequired,
-  }).isRequired,
-  handleStop: PropTypes.func.isRequired,
-  handleStart: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  setIsPlaying: PropTypes.func.isRequired,
-  audioRef: PropTypes.object.isRequired,
-};
 
 export default AudioPlayer;
