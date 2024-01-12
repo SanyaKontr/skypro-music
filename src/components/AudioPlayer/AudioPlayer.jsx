@@ -1,5 +1,4 @@
 import * as S from "./AudioPlayerStyle.js";
-import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { convertSecToMinAndSec } from "../../helpers.js";
 
