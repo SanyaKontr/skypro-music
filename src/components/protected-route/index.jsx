@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import PropTypes from "prop-types";
+
 
 export const ProtectedRoute = ({ redirectPath = "/login", isAllowed }) => {
   if (!isAllowed) {
@@ -8,6 +8,3 @@ export const ProtectedRoute = ({ redirectPath = "/login", isAllowed }) => {
   return <Outlet />;
 };
 
-ProtectedRoute.propTypes = {
-  redirectPath: PropTypes.string,
-};

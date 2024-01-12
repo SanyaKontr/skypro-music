@@ -133,11 +133,6 @@ function Tracklist({ handleTrackPlay, tracks, getTracksError, loading }) {
     </Style.CenterblockContent>
   );
 }
-Tracklist.propTypes = {
-  handleTrackPlay: PropTypes.func.isRequired,
-  tracks: PropTypes.array.isRequired,
-  getTracksError: PropTypes.any,
-  loading: PropTypes.bool.isRequired,
-};
+
 
 export default Tracklist;

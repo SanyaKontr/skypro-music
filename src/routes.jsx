@@ -6,7 +6,6 @@ import { Registration } from "./pages/registration/index.jsx";
 import { Category } from "./pages/Category/CategoryPage.jsx"
 import { Favorites } from "./pages/favorites/index.js";
 import { ProtectedRoute } from "./components/protected-route";
-import{ PropTypes } from "prop-types";
 
 
 
@@ -25,9 +24,3 @@ export const AppRoutes = ({ user, setUser }) => {
     </Routes>
   );
 };
-
-AppRoutes.propTypes = {
-  user: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf([null])]),
-  setUser: PropTypes.func.isRequired,
-};
-export default AppRoutes;
