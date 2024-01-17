@@ -11,7 +11,7 @@ import { EmulationApp } from "../../components/Emulation/EmulationApp.jsx";
 import { getAllTracks } from "../../Api.js";
 import { handleStart, handleStop, handleTrackPlay } from "../../components/AudioPlayer/AudioPlayer.jsx";
 
-export const Main = () => {
+export const Main = ({ handleLogout}) => {
   const [showAudioPlayer, setShowAudioPlayer] = useState(null); 
   const [loading, setLoading] = useState(true); 
   const [tracks, setTracks] = useState(true); 
@@ -57,7 +57,7 @@ return loading ? (
     <GlobalStyle />
     <S.Container>
       <S.Main>
-        <NavMenu />
+      <NavMenu handleLogout={handleLogout}/>
         <div>
           <Search />
           <S.CenterblockH2>Треки</S.CenterblockH2>
@@ -68,7 +68,7 @@ return loading ? (
             tracksError={tracksError}
           />
         </div>
-        <Sidebar tracks={tracks} />
+        <Sidebar tracks={tracks} handleLogout={handleLogout} />
         </S.Main>
         {showAudioPlayer ? (
           <AudioPlayer

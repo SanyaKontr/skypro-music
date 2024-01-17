@@ -1,73 +1,107 @@
-import * as S from "../PageStyles.js";
-import { GlobalStyle } from "../../App.styles.js";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+import { Link, useNavigate } from "react-router-dom";
+import * as S from "../register/register.styles";
+import { useContext, useEffect, useRef, useState } from "react";
+import { loginUser } from "../../Api";
+import { UserContext } from "../../Authorization";
 
-const Button = styled.button`
-  width: 278px;
-  height: 52px;
-  background-color: #580ea2;
-  border-radius: 6px;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  border: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  & {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 24px;
-    letter-spacing: -0.05px;
-    color: #ffffff;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-  }
-  &:active {
-    background-color: #271a58;
-  }
-  &:hover {
-    background-color: #3f007d;
-  }
-`;
-
-export const Login = ({ setUser }) => {
+export default function Login() {
   const navigate = useNavigate();
+  const { changingUserData } = useContext(UserContext);
 
-  const onSubmit = () => {
-    localStorage.setItem("user", JSON.stringify({ login: "abcd" }));
-    setUser({ login: "abcd" });
-    navigate("/");
+  const [error, setError] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
+
+  const authBtnRef = useRef(null);
+
+  const handleLogin = async () => {
+    if (!email) {
+      setError("Укажите почту");
+      return;
+    }
+
+    if (!password) {
+      setError("Укажите пароль");
+      return;
+    }
+
+    try {
+      setIsRegistering(true);
+      const response = await loginUser({ email, password });
+
+      if (response.ok) {
+        const user = await response.json();
+        localStorage.setItem("user", JSON.stringify(user));
+        changingUserData(user);
+        navigate("/");
+      } else {
+        if (response.status === 400) {
+          const errorData = await response.json();
+          let errorMessage = "Неверный ввод";
+
+          for (const field in errorData) {
+            errorMessage += `\n${field}: ${errorData[field].join(", ")}`;
+          }
+          setError(errorMessage);
+        } else if (response.status === 401) {
+          setError("Пользователь с таким email или паролем не найден");
+        } else if (response.status === 500) {
+          setError("Внутренняя ошибка сервера");
+        }
+      }
+    } catch (error) {
+      console.error("Ошибка при входе:", error.message);
+      setError("Произошла ошибка при входе. Пожалуйста, попробуйте еще раз.");
+    } finally {
+      setIsRegistering(false);
+    }
   };
 
+  useEffect(() => {
+    setError(null);
+  }, [email, password]);
   return (
-    <>
-      <GlobalStyle />
-      <S.Wrapper>
-        <S.Container>
-          <S.Text>Login Page</S.Text>
-          <Button onClick={onSubmit}>Войти</Button>
-        </S.Container>
-      </S.Wrapper>
-    </>
-  );
-};
+    <S.PageContainer>
+    <S.ModalForm>
+      <Link to="/">
+        <S.ModalLogo>
+          <S.ModalLogoImage src="/img/logo_modal.png" alt="logo" />
+        </S.ModalLogo>
+      </Link>
+      <>
+        <S.Inputs>
+          <S.ModalInput
+            type="text"
+            name="login"
+            placeholder="Почта"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <S.ModalInput
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
+        </S.Inputs>
 
-Login.propTypes = {
-  setUser: PropTypes.func.isRequired,
-};
+        {error && <S.Error>{error}</S.Error>}
+        <S.Buttons>
+          <S.PrimaryButton
+            onClick={handleLogin}
+            ref={authBtnRef}
+            disabled={isRegistering}
+          >
+            {isRegistering ? "Загрузка..." : "Войти"}
+          </S.PrimaryButton>
+          <S.SecondaryButton as={Link} to="/register">
+              Зарегистрироваться
+            </S.SecondaryButton>
+          </S.Buttons>
+        </>
+      </S.ModalForm>
+    </S.PageContainer>
+  );
+}
