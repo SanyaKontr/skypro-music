@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import { Main } from "./pages/main/index.jsx";
 import { NotFound } from "./pages/NotFound/index.jsx";
-import Register from "./pages/register/register.jsx";
-import Login from "./pages/login/login.jsx";
+import Register from "./pages/register/Register.jsx";
+import Login from "./pages/login/Login.jsx";
 import { Category } from "./pages/Category/CategoryPage.jsx"
 import { Favorites } from "./pages/favorites/index.js";
 import { ProtectedRoute } from "./components/protected-route";

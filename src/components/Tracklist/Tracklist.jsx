@@ -2,7 +2,7 @@ import * as Style from "./TracklistStyle.js";
 import { convertSecToMinAndSec } from "../../helpers.js";
 
 
-function Tracklist({ handleTrackPlay, tracks, getTracksError, loading }) {
+function Tracklist({ handleTrackPlay, tracks, tracksError, loading }) {
   return (
     <Style.CenterblockContent>
       <Style.ContentTitle>
@@ -15,7 +15,7 @@ function Tracklist({ handleTrackPlay, tracks, getTracksError, loading }) {
           </Style.PlaylistTitleSvg>
         </Style.PlaylistTitleColCol04>
       </Style.ContentTitle>
-      <p>{getTracksError}</p>
+      <p>{tracksError}</p>
       <Style.ContentPlaylist>
         {loading ?
           ([1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (<Style.PlaylistItem>

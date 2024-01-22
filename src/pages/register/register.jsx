@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
-import * as S from "./register.styles"
+import * as S from "./Register.styles.js"
 import { useContext, useEffect, useRef, useState } from "react";
 import { registerUser } from "../../Api.js";
-import { UserContext } from "../../Authorization";
+import { UserContext } from "../../Authorization.js";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function Register() {
       const response = await registerUser({ email, password });
       if (response.ok) {
         const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
+       // localStorage.setItem("user", JSON.stringify(user));
         changingUserData(user);
         navigate("/login");
       } else {

@@ -14,6 +14,7 @@ flex-direction: row;
 -webkit-box-align: center;
 -ms-flex-align: center;
 align-items: center;
+padding-top: 20px;
 `
 
 export const SearchText = styled.input`
@@ -46,4 +47,5 @@ export const SearchSvg = styled.svg`
   margin-right: 5px;
   stroke: #ffffff;
   fill: transparent;
+
 `;
