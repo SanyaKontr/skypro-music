@@ -1,16 +1,39 @@
-import { ADD_TODO, TOGGLE_TODO } from "../Types/Todo";
+import {
+    SET_CURRENT_TRACK,
+    NEXT_TRACK,
+    PREVIOUS_TRACK,
+    MIX_TRACK,
+    PLAY,
+    PAUSE,
+  } from "../types/todo";
 
-let nextTodoId = 0;
-
-export const addTodo = (content) => ({
-    type: ADD_TODO,
+  export const setCurrentTrack = ({ playlist, track }) => ({
+    type: SET_CURRENT_TRACK,
     payload: {
-        id: ++nextTodoId,
-        content,
+      playlist,
+      track,
     },
-});
+  });
 
-export const toggleTodo = (id) => ({
-    type: TOGGLE_TODO,
-    payload: {id},
-});
+  export const play = () => ({
+    type: PLAY,
+  });
+
+  export const pause = () => ({
+    type: PAUSE,
+  });
+
+  export const nextTrack = () => ({
+    type: NEXT_TRACK,
+  });
+
+  export const previousTrack = () => ({
+    type: PREVIOUS_TRACK,
+  });
+
+  export const mixTracks = (isMix) => ({
+    type: MIX_TRACK,
+    payload: {
+      isMix,
+    },
+  });
