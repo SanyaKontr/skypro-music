@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import * as S from "./Register.styles.js"
+import * as S from "./register.styles.js"
 import { useContext, useEffect, useRef, useState } from "react";
 import { registerUser } from "../../Api.js";
 import { UserContext } from "../../Authorization.js";
