@@ -1,8 +1,7 @@
 import * as Style from "./TracklistStyle.js";
 import { convertSecToMinAndSec } from "../../helpers.js";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../store/actions/creators/todo.js";
+import { setCurrentTrack } from "../../store/actions/creators/Todo.js";
 import { useSelector } from "react-redux";
 
 function Tracklist({ tracks, getTracksError }) {

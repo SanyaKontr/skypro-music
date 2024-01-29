@@ -5,7 +5,7 @@ import {
     MIX_TRACK,
     PLAY,
     PAUSE,
-  } from "../types/todo";
+  } from "../types/Todo";
 
   export const setCurrentTrack = ({ playlist, track }) => ({
     type: SET_CURRENT_TRACK,
