@@ -1,8 +1,19 @@
 import * as Style from "./TracklistStyle.js";
 import { convertSecToMinAndSec } from "../../helpers.js";
+import { useDispatch } from "react-redux";
+import { setCurrentTrack } from "../../store/actions/creators/Todo.js";
+import { useSelector } from "react-redux";
 
+function Tracklist({ tracks, getTracksError }) {
+  const dispatch = useDispatch();
 
-function Tracklist({ handleTrackPlay, tracks, tracksError, loading }) {
+  const handleCurrentTrackId = (track) => {
+    dispatch(setCurrentTrack({ playlist: tracks, track: track }));
+  };
+
+  const { currentTrack } = useSelector((store) => store.player);
+  const { isPlaying } = useSelector((store) => store.player);
+
   return (
     <Style.CenterblockContent>
       <Style.ContentTitle>
@@ -15,86 +26,64 @@ function Tracklist({ handleTrackPlay, tracks, tracksError, loading }) {
           </Style.PlaylistTitleSvg>
         </Style.PlaylistTitleColCol04>
       </Style.ContentTitle>
-      <p>{tracksError}</p>
+      <p>{getTracksError}</p>
       <Style.ContentPlaylist>
-        {loading ?
-          ([1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (<Style.PlaylistItem>
+        {tracks.map((track) => (
+          <Style.PlaylistItem key={track.id}>
             <Style.PlaylistTrack>
               <Style.TrackTitle>
                 <Style.TrackTitleImage>
-                  <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+                  
+                {currentTrack && currentTrack.id === track.id ? (
+                    <Style.BlinkingDot
+                      $isPlaying={isPlaying}
+                    ></Style.BlinkingDot>
+                  ) : (
+                    <Style.TrackTitleSvg alt="music">
+
+                      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+                      {track.logo}
+
+                    </Style.TrackTitleSvg>
+                  )}
                 </Style.TrackTitleImage>
                 <div>
-                  <Style.TrackTitleLink href="http://">
-                    <img
-                      src="/icon/track.svg"
-                      alt="Название трека загружается"
-                    />
-                    <Style.TrackTitleSpan></Style.TrackTitleSpan>
+                <Style.TrackTitleLink
+                    onClick={() => {
+                      handleCurrentTrackId(track);
+                    }}
+                  >
+                    {track.name} <Style.TrackTitleSpan></Style.TrackTitleSpan>
                   </Style.TrackTitleLink>
                 </div>
               </Style.TrackTitle>
               <Style.TrackAuthor>
-                <Style.TrackAuthorLink href="http://">
-                  <img
-                    src="/icon/singer.svg"
-                    alt="Имя исполнителя загружается"
-                  />
+              <Style.TrackAuthorLink
+                  onClick={() => handleCurrentTrackId(track)}
+                >
+                  {track.author}
                 </Style.TrackAuthorLink>
               </Style.TrackAuthor>
               <Style.TrackAlbum>
-                <Style.TrackAlbumLink href="http://">
-                  <img
-                    src="/icon/album.svg"
-                    alt="Название альбома загружается"
-                  />
+              <Style.TrackAlbumLink
+                  onClick={() => handleCurrentTrackId(track)}
+                >
+                  {track.album}
                 </Style.TrackAlbumLink>
               </Style.TrackAlbum>
+              <div>
+                <Style.TrackTimeSvg alt="time">
+                  <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+                </Style.TrackTimeSvg>
+                <Style.TrackTimeText>
+                  {convertSecToMinAndSec(track.duration_in_seconds)}
+                </Style.TrackTimeText>
+              </div>
             </Style.PlaylistTrack>
-          </Style.PlaylistItem>))
-          )
-          : tracks.length > 0 && tracks.map((track) => (
-            <Style.PlaylistItem key={track.id}>
-              <Style.PlaylistTrack>
-                <Style.TrackTitle>
-                  <Style.TrackTitleImage>
-                    <Style.TrackTitleSvg alt="music">
-                      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
-                      {track.logo}
-                    </Style.TrackTitleSvg>
-                  </Style.TrackTitleImage>
-                  <div>
-                    <Style.TrackTitleLink onClick={() => handleTrackPlay(track)}>
-                      {track.name} <Style.TrackTitleSpan></Style.TrackTitleSpan>
-                    </Style.TrackTitleLink>
-                  </div>
-                </Style.TrackTitle>
-                <Style.TrackAuthor>
-                  <Style.TrackAuthorLink href={track.track_file}>
-                    {track.author}
-                  </Style.TrackAuthorLink>
-                </Style.TrackAuthor>
-                <Style.TrackAlbum>
-                  <Style.TrackAlbumLink href={track.track_file}>
-                    {track.album}
-                  </Style.TrackAlbumLink>
-                </Style.TrackAlbum>
-                <div>
-                  <Style.TrackTimeSvg alt="time">
-                    <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-                  </Style.TrackTimeSvg>
-                  <Style.TrackTimeText>
-                    {convertSecToMinAndSec(track.duration_in_seconds)}
-                  </Style.TrackTimeText>
-                </div>
-              </Style.PlaylistTrack>
-            </Style.PlaylistItem>
-          ))}
-
+          </Style.PlaylistItem>
+        ))}
       </Style.ContentPlaylist>
     </Style.CenterblockContent>
   );
 }
-
-
 export default Tracklist;
