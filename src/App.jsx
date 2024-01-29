@@ -4,7 +4,7 @@ import { GlobalStyle } from "./App.styles.js";
 import { AppRoutes } from "./routes.jsx";
 import { UserContext } from "./Authorization.js";
 import { useNavigate } from "react-router-dom";
-import { setCurrentTrack } from "./store/actions/creators/todo.js";
+import { setCurrentTrack } from "./store/actions/creators/Todo.js";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));

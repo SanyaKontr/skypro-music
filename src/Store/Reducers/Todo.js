@@ -5,7 +5,7 @@ import {
     MIX_TRACK,
     PLAY,
     PAUSE,
-  } from "../actions/types/todo";
+  } from "../actions/types/Todo";
 
   const initialState = {
     currentTrack: null,
