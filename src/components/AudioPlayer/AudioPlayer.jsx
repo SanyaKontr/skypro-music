@@ -7,7 +7,7 @@ import {
   mixTracks,
   play,
   pause,
-} from "../../store/actions/creators/Todo.js";
+} from "../../Store/Actions/Creators/Todo.js";
 import { useDispatch } from "react-redux";
 
 function AudioPlayer({ track }) {
