@@ -1,6 +1,8 @@
-import { styled } from "styled-components";
+import {
+  styled
+} from "styled-components";
 
-export const Bar = styled.div`
+export const Bar = styled.div `
   display: flex; 
   justify-content: center; 
   align-items: center;
@@ -14,7 +16,7 @@ export const Bar = styled.div`
   transform: translate(-50%, -50%);
   
 `;
-export const TrackTime = styled.div`
+export const TrackTime = styled.div `
   color: #696969;
   margin-bottom: 10px;
   margin-right: 10px;
@@ -23,7 +25,7 @@ export const TrackTime = styled.div`
   `;
 
 
-export const BarContent = styled.div`
+export const BarContent = styled.div `
   position: absolute;
   bottom: 0;
   left: 0;
@@ -31,7 +33,7 @@ export const BarContent = styled.div`
   background: rgba(28, 28, 28, 0.5);
 `;
 
-export const BarPlayerProgress = styled.div`
+export const BarPlayerProgress = styled.div `
 position: relative;
   width: 100%;
   height: 8px;
@@ -39,7 +41,7 @@ position: relative;
   cursor: pointer;
 `;
 
-export const BarPlayerProgressLoad = styled.div`
+export const BarPlayerProgressLoad = styled.div `
   position: absolute;
   top: 1px;
   left: 0;
@@ -47,7 +49,7 @@ export const BarPlayerProgressLoad = styled.div`
   background: #b672ff;
 `;
 
-export const BarPlayerBlock = styled.div`
+export const BarPlayerBlock = styled.div `
   height: 73px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -62,7 +64,7 @@ export const BarPlayerBlock = styled.div`
   background: rgba(28, 28, 28, 0.5);
 `;
 
-export const BarPlayer = styled.div`
+export const BarPlayer = styled.div `
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -78,7 +80,7 @@ export const BarPlayer = styled.div`
   justify-content: flex-start;
 `;
 
-export const VolumeBlock = styled.div`
+export const VolumeBlock = styled.div `
   width: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -89,7 +91,7 @@ export const VolumeBlock = styled.div`
   padding: 0 92px 0 0;
 `;
 
-export const PlayerControls = styled.div`
+export const PlayerControls = styled.div `
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -100,7 +102,7 @@ export const PlayerControls = styled.div`
   padding: 0 27px 0 31px;
 `;
 
-export const PlayerTrackPlay = styled.div`
+export const PlayerTrackPlay = styled.div `
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -110,7 +112,7 @@ export const PlayerTrackPlay = styled.div`
   flex-direction: row;
 `;
 
-export const PlayerBtnPrev = styled.div`
+export const PlayerBtnPrev = styled.div `
   padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -122,12 +124,12 @@ export const PlayerBtnPrev = styled.div`
   cursor: pointer;
 `;
 
-export const PlayerBtnPrevSvg = styled.svg`
+export const PlayerBtnPrevSvg = styled.svg `
   width: 15px;
   height: 14px;
 `;
 
-export const PlayerBtnPlay = styled.div`
+export const PlayerBtnPlay = styled.div `
   padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -139,13 +141,13 @@ export const PlayerBtnPlay = styled.div`
   cursor: pointer;
 `;
 
-export const PlayerBtnPlaySvg = styled.svg`
+export const PlayerBtnPlaySvg = styled.svg `
   width: 22px;
   height: 20px;
   fill: #d9d9d9;
 `;
 
-export const PlayerBtnNext = styled.div`
+export const PlayerBtnNext = styled.div `
   padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -158,14 +160,14 @@ export const PlayerBtnNext = styled.div`
   cursor: pointer;
 `;
 
-export const PlayerBtnNextSvg = styled.svg`
+export const PlayerBtnNextSvg = styled.svg `
   width: 15px;
   height: 14px;
   fill: inherit;
   stroke: #d9d9d9;
 `;
 
-export const PlayerBtnRepeat = styled.div`
+export const PlayerBtnRepeat = styled.div `
   margin-right: 24px;
   padding: 5px;
   display: -webkit-box;
@@ -177,7 +179,7 @@ export const PlayerBtnRepeat = styled.div`
   cursor: pointer;
 `;
 
-export const PlayerBtnRepeatSvg = styled.svg`
+export const PlayerBtnRepeatSvg = styled.svg `
   width: 18px;
   height: 12px;
   fill: transparent;
@@ -190,7 +192,7 @@ export const PlayerBtnRepeatSvg = styled.svg`
   }
 `;
 
-export const PlayerBtnShuffle = styled.div`
+export const PlayerBtnShuffle = styled.div `
   padding: 5px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -207,17 +209,20 @@ export const PlayerBtnShuffle = styled.div`
   cursor: pointer;
 `;
 
-export const PlayerBtnShuffleSvg = styled.svg`
-  width: 19px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
-  &:hover {
-    stroke: #acacac;
-  }
+export const PlayerBtnShuffleSvg = styled.svg `
+width: 18px;
+height: 12px;
+fill: transparent;
+stroke: ${(props) => (props.$isMix ? "#fff" : "#696969")};
+&:hover {
+  stroke: ${(props) => (props.$isMix ? "#fff" : "#acacac")};
+}
+&:active {
+  stroke: #fff;
+}
 `;
 
-export const TrackPlayContain = styled.div`
+export const TrackPlayContain = styled.div `
   width: auto;
   display: -ms-grid;
   display: grid;
@@ -229,7 +234,7 @@ export const TrackPlayContain = styled.div`
   align-items: center;
 `;
 
-export const TrackPlayImage = styled.div`
+export const TrackPlayImage = styled.div `
   width: 51px;
   height: 51px;
   background-color: #313131;
@@ -249,21 +254,21 @@ export const TrackPlayImage = styled.div`
   grid-area: image;
 `;
 
-export const TrackPlaySvg = styled.svg`
+export const TrackPlaySvg = styled.svg `
   width: 18px;
   height: 17px;
   fill: transparent;
   stroke: #4e4e4e;
 `;
 
-export const TrackPlayAuthor = styled.div`
+export const TrackPlayAuthor = styled.div `
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: author;
   min-width: 49px;
 `;
 
-export const TrackPlayAuthorLink = styled.a`
+export const TrackPlayAuthorLink = styled.a `
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -272,14 +277,14 @@ export const TrackPlayAuthorLink = styled.a`
   white-space: nowrap;
 `;
 
-export const TrackPlayAlbum = styled.div`
+export const TrackPlayAlbum = styled.div `
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: album;
   min-width: 49px;
 `;
 
-export const TrackPlayAlbumLink = styled.a`
+export const TrackPlayAlbumLink = styled.a `
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
@@ -287,7 +292,7 @@ export const TrackPlayAlbumLink = styled.a`
   color: #ffffff;
 `;
 
-export const TrackPlayLikeDis = styled.div`
+export const TrackPlayLikeDis = styled.div `
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -301,12 +306,12 @@ export const TrackPlayLikeDis = styled.div`
   margin-left: 26%;
 `;
 
-export const TrackPlayLike = styled.div`
+export const TrackPlayLike = styled.div `
   padding: 5px;
   cursor: pointer;
   `;
 
-export const TrackPlayLikeSvg = styled.svg`
+export const TrackPlayLikeSvg = styled.svg `
   width: 14px;
   height: 12px;
   fill: transparent;
@@ -316,13 +321,13 @@ export const TrackPlayLikeSvg = styled.svg`
   }
 `;
 
-export const TrackPlayDislike = styled.div`
+export const TrackPlayDislike = styled.div `
   margin-left: 28.5px;
   padding: 5px;
   cursor: pointer;
 `;
 
-export const TrackPlayDislikeSvg = styled.svg`
+export const TrackPlayDislikeSvg = styled.svg `
   width: 14.34px;
   height: 13px;
   fill: transparent;
@@ -332,7 +337,7 @@ export const TrackPlayDislikeSvg = styled.svg`
   }
 `;
 
-export const VolumeContent = styled.div`
+export const VolumeContent = styled.div `
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -349,28 +354,28 @@ export const VolumeContent = styled.div`
   cursor: pointer;
 `;
 
-export const VolumeImage = styled.div`
+export const VolumeImage = styled.div `
   width: 13px;
   height: 18px;
   margin-right: 17px;
 `;
 
-export const VolumeSvg = styled.svg`
+export const VolumeSvg = styled.svg `
   width: 13px;
   height: 18px;
   fill: transparent;
 `;
 
-export const VolumeProgress = styled.div`
+export const VolumeProgress = styled.div `
   width: 109px;
   cursor: pointer;
 `;
 
-export const VolumeProgressLine = styled.input`
+export const VolumeProgressLine = styled.input `
   width: 109px;
   cursor: pointer;
   `;
-  
-  export const StandartAudioPlayer = styled.audio`
+
+export const StandartAudioPlayer = styled.audio `
     display: none;
 `;
