@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { UserContext } from "../../Authorization.js";
 
 
-function Sidebar({ handleLogout }) {
+export function Sidebar({ handleLogout }) {
   const { userData } = useContext(UserContext);
   return (
     <Styled.MainSidebar>

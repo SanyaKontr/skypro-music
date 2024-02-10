@@ -10,47 +10,37 @@ import Tracklist from "../../components/Tracklist/Tracklist.jsx";
 import { EmulationApp } from "../../components/Emulation/EmulationApp.jsx";
 import { getAllTracks } from "../../Api.js";
 import { useSelector } from "react-redux";
+import { useGetAllTracksQuery } from "../../Store/api/music.js";
 
 export const Main = ({ handleLogout }) => {
-  const [loading, setLoading] = useState(true);
-  const [tracks, setTracks] = useState(true);
   const [tracksError, setTracksError] = useState(true);
-
+  const {data: tracks, isLoading: loading} = useGetAllTracksQuery();
   const currentTrack = useSelector((state) => state.player.currentTrack);
-
-useEffect(() => {
-  getAllTracks()
-    .then((tracks) => {
-      setTracks(tracks);
-      setLoading(false);
-    })
-    .catch((error) => {
-      setTracksError(
-        `Не удалось загрузить плейлист, попробуйте позже: ${error.message}`
-      );
-    })
-    .finally(() => setLoading(false));
-}, []);
-
-return loading ? (
-  <EmulationApp handleLogout={handleLogout} />
-) : (
-  <S.Wrapper>
-    <GlobalStyle />
-    <S.Container>
-      <S.Main>
-      <NavMenu handleLogout={handleLogout} />
+  const myUser = JSON.parse(localStorage.getItem("user"));
+  console.log(myUser);
+  const mappedTracks = tracks?.map((track) => {
+    const isLike = track.stared_user?.filter((user)=> user.id === myUser.id).length > 0 ? true : false;
+    return {
+      ...track,
+      isLike
+    };
+  }); 
+  return loading ? (
+    <EmulationApp handleLogout={handleLogout} />
+  ) : (
+    <>
+      <GlobalStyle />
+      <S.Container>
+        <S.Main>
         <div>
-          <Search />
-          <S.CenterblockH2>Треки</S.CenterblockH2>
-          <Filters />
-          <Tracklist tracks={tracks} tracksError={tracksError} />
-        </div>
-        <Sidebar tracks={tracks} handleLogout={handleLogout} />
-        </S.Main>
-        {currentTrack ? <AudioPlayer track={currentTrack} /> : null}
-        <footer></footer>
+            <Search />
+            <S.CenterblockH2>Треки</S.CenterblockH2>
+            <Filters />
+            <Tracklist tracks={mappedTracks} tracksError={tracksError} />
+          </div>
+          </S.Main>
+          <footer></footer>
       </S.Container>
-    </S.Wrapper>
+      </>
   );
 };

@@ -8,12 +8,14 @@ import {
   play,
   pause,
 } from "../../Store/Actions/Creators/Todo.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { isNextTrack } from "../../Store/selectors/todo.js";
 
 function AudioPlayer({ track }) {
+
   const [isPlaying, setIsPlaying] = useState(false); 
   const [isMix, setIsMix] = useState(false);
-
+    const isNext = useSelector(isNextTrack);
   const [isLooped, setIsLooped] = useState(false);
 
   const [currentTime, setCurrentTime] = useState(0);
@@ -45,7 +47,6 @@ function AudioPlayer({ track }) {
   };
 
   const togglePlay = isPlaying ? handleStop : handleStart;
-
   const handleNextTrack = () => {
     dispatch(nextTrack());
   };
@@ -90,9 +91,10 @@ function AudioPlayer({ track }) {
     }
 
     const handleTrackEnd = () => {
+      console.log(isNext);
       !isLooped && dispatch(nextTrack());
       isLooped && setCurrentTime(0);
-      isLooped && handleStart(); 
+      isLooped && handleStart();
     };
 
     if (audioRef.current) {
@@ -165,7 +167,7 @@ function AudioPlayer({ track }) {
                 </S.PlayerBtnPrev>
                 <S.PlayerBtnPlay>
                   <S.PlayerBtnPlaySvg alt="play" onClick={togglePlay}>
-                    {isPlaying ? (
+                    {isPlaying || isNext? (
                       <use xlinkHref="/icon/sprite-2.svg#icon-pause"></use>
                     ) : (
                       <use xlinkHref="/icon/sprite.svg#icon-play"></use>

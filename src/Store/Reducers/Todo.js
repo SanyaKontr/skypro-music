@@ -5,6 +5,7 @@ import {
   MIX_TRACK,
   PLAY,
   PAUSE,
+  REMOVE_CURRENT_TRACK
 } from "../Actions/Types/Todo";
 
 const initialState = {
@@ -31,6 +32,15 @@ export default function playerReducer(state = initialState, action) {
         currentTrack: track,
         tracks: playlist,
         isPlaying: true,
+      };
+    }
+
+    case REMOVE_CURRENT_TRACK: {
+      return {
+        ...state,
+        currentTrack: null,
+        tracks: [],
+        isPlaying: false,
       };
     }
 
@@ -88,9 +98,11 @@ export default function playerReducer(state = initialState, action) {
     }
 
     case MIX_TRACK: {
+      const isMixValue = action.payload.isMix;
+      console.log(isMixValue);
       return {
         ...state,
-        isMix: !state.isMix,
+        isMix: isMixValue ? isMixValue : !state.isMix,
         mixTracks: [...state.tracks].sort(() => 0.5 - Math.random()),
       };
     }

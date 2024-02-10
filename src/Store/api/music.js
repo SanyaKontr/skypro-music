@@ -11,37 +11,43 @@ export const musicApi = createApi ({
             query: () => ({
                 url:  '/track/favorite/all/',
                 headers: {
-                Authorization: ''
+                Authorization: `Bearer ${localStorage.getItem("access")}`
                 }
 
-            })
-        }),
+            }),
+            transformResponse: (response) => {
+                return response.map((track) => ({ ...track, isLike: true }));
+              },
+              providesTags: (result) =>
+                result
+                  ? [{ type: "isFavorite", id: "LIST" }]
+                  : [{ type: "isFavorite", id: "LIST" }],
+            }),
+
         addTrack: builder.mutation ({
          query:  (id) => ({
             url: `/track/${id}/favorite/`,
             headers: {
-                Authorization: '//токен'
+                Authorization: `Bearer ${localStorage.getItem("access")}`
 
             },
             method: 'POST'
-
-        })
         }),
+        
+        invalidatesTags: [{ type: "isFavorite", id: "LIST" }],
+            }),
         deleteTrack: builder.mutation ({
             query:  (id) => ({
                url: `/track/${id}/favorite/`,
                headers: {
-                   Authorization: '//токен'
+                   Authorization: `Bearer ${localStorage.getItem("access")}`
 
                },
                method: 'DELETE'
-
+            }),
+            invalidatesTags: [{ type: "isFavorite", id: "LIST" }],
            })
-           })
-
-
     })
-
 }) 
 
 export const { useGetAllTracksQuery, useGetFavouriteTracksQuery, useAddTrackMutation, useDeleteTrackMutation } = musicApi

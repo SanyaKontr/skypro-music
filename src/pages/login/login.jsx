@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "../register/register.styles";
 import { useContext, useEffect, useRef, useState } from "react";
-import { loginUser } from "../../Api";
+import { getTokenUser, loginUser } from "../../Api";
 import { UserContext } from "../../Authorization";
 
 export default function Login() {
@@ -34,6 +34,9 @@ export default function Login() {
         const user = await response.json();
         localStorage.setItem("user", JSON.stringify(user));
         changingUserData(user);
+        const newToken =  await getTokenUser({email, password});
+        localStorage.setItem("access", newToken.access);
+        localStorage.setItem("refresh", newToken.refresh);
         navigate("/");
       } else {
         if (response.status === 400) {
