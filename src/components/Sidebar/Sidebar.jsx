@@ -10,7 +10,7 @@ export function Sidebar({ handleLogout }) {
     <Styled.MainSidebar>
       <Styled.SidebarPersonal>
       <Styled.SidebarPersonalName> 
-          {userData.username}
+          {userData.value?.username}
           </Styled.SidebarPersonalName>
           <Styled.SidebarIcon onClick={handleLogout}>
           <svg alt="logout">
