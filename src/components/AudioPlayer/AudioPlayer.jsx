@@ -10,10 +10,11 @@ import {
 } from "../../Store/Actions/Creators/Todo.js";
 import { useDispatch, useSelector } from "react-redux";
 import { isNextTrack } from "../../Store/selectors/todo.js";
+import { setNext, setPause, setPlay, setPrev } from "../../Store/trackSlice.js";
 
 function AudioPlayer({ track }) {
-
-  const [isPlaying, setIsPlaying] = useState(false); 
+const {isPlaying, isShuffled} = useSelector(state=> state.player)
+  //const [isPlaying, setIsPlaying] = useState(false); 
   const [isMix, setIsMix] = useState(false);
     const isNext = useSelector(isNextTrack);
   const [isLooped, setIsLooped] = useState(false);
@@ -36,19 +37,17 @@ function AudioPlayer({ track }) {
 
   const handleStart = () => {
     audioRef.current.play();
-    setIsPlaying(true);
-    dispatch(play());
+    dispatch(setPlay());
   };
 
   const handleStop = () => {
     audioRef.current.pause();
-    setIsPlaying(false);
-    dispatch(pause());
+    dispatch(setPause());
   };
 
   const togglePlay = isPlaying ? handleStop : handleStart;
   const handleNextTrack = () => {
-    dispatch(nextTrack());
+    dispatch(setNext());
   };
 
   const handlePreviousTrack = () => {
@@ -57,7 +56,7 @@ function AudioPlayer({ track }) {
 
       return;
     }
-    dispatch(previousTrack());
+    dispatch(setPrev());
   };
 
   const duration = audioRef.current?.duration || 0;
@@ -78,7 +77,6 @@ function AudioPlayer({ track }) {
     audioRef.current.load();
   }, [track]);
 
-
   useEffect(() => {
     const updateCurrentTime = () => {
       if (audioRef.current) {
@@ -91,10 +89,17 @@ function AudioPlayer({ track }) {
     }
 
     const handleTrackEnd = () => {
-      console.log(isNext);
-      !isLooped && dispatch(nextTrack());
+      console.log(!isNext, !isLooped);
+      if (!isNext && !isLooped) {
+        console.log("Pause");
+        dispatch(setPause())
+        return
+      } 
+      console.log("qjwerhnrq");
+      !isLooped && dispatch(setNext());
       isLooped && setCurrentTime(0);
       isLooped && handleStart();
+   
     };
 
     if (audioRef.current) {
@@ -126,7 +131,7 @@ function AudioPlayer({ track }) {
       audioRef.current.currentTime = newTime;
     }
   };
-
+  console.log(isPlaying);
   const handleLoop = () => {
     audioRef.current.loop = true;
     setIsLooped(true);
@@ -167,7 +172,7 @@ function AudioPlayer({ track }) {
                 </S.PlayerBtnPrev>
                 <S.PlayerBtnPlay>
                   <S.PlayerBtnPlaySvg alt="play" onClick={togglePlay}>
-                    {isPlaying || isNext? (
+                    {isPlaying ?(
                       <use xlinkHref="/icon/sprite-2.svg#icon-pause"></use>
                     ) : (
                       <use xlinkHref="/icon/sprite.svg#icon-play"></use>

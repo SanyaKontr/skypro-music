@@ -1,18 +1,19 @@
 import * as Style from "./TracklistStyle.js";
 import { convertSecToMinAndSec } from "../../helpers.js";
 import { useDispatch } from "react-redux";
-import { setCurrentTrack } from "../../Store/Actions/Creators/Todo.js";
 import { useSelector } from "react-redux";
 import { useAddTrackMutation, useDeleteTrackMutation } from "../../Store/api/music.js";
 import { useEffect, useReducer, useState } from 'react'
 import { refreshTokenUser } from "../../Api.js";
+import { setCurrentPlaylist, setCurrentTrack } from "../../Store/trackSlice.js";
 
 
 function Tracklist({ tracks = [], getTracksError, isFavourite = false }) {
   const dispatch = useDispatch();
 
   const handleCurrentTrackId = (track) => {
-    dispatch(setCurrentTrack({ playlist: tracks, track: track }));
+    dispatch(setCurrentTrack(track));
+    dispatch(setCurrentPlaylist(tracks));
   };
 
   const { currentTrack } = useSelector((store) => store.player);
@@ -72,7 +73,7 @@ function Tracklist({ tracks = [], getTracksError, isFavourite = false }) {
 
       <Style.ContentPlaylist>
       {tracks.length > 0 &&  tracks.map((track) => (
-          <Style.PlaylistItem key={track.id}>
+          <Style.PlaylistItem key={track.id} onClick={() => handleCurrentTrackId(track)}>
             <Style.PlaylistTrack>
               <Style.TrackTitle>
                 <Style.TrackTitleImage>
@@ -91,25 +92,21 @@ function Tracklist({ tracks = [], getTracksError, isFavourite = false }) {
                   )}
                 </Style.TrackTitleImage>
                 <div>
-                  <Style.TrackTitleLink
-                    onClick={() => {
-                      handleCurrentTrackId(track);
-                    }}
-                  >
+                  <Style.TrackTitleLink>
                     {track.name} <Style.TrackTitleSpan></Style.TrackTitleSpan>
                   </Style.TrackTitleLink>
                 </div>
               </Style.TrackTitle>
               <Style.TrackAuthor>
                 <Style.TrackAuthorLink
-                  onClick={() => handleCurrentTrackId(track)}
+            
                 >
                   {track.author}
                 </Style.TrackAuthorLink>
               </Style.TrackAuthor>
               <Style.TrackAlbum>
                 <Style.TrackAlbumLink
-                  onClick={() => handleCurrentTrackId(track)}
+                  
                 >
                   {track.album}
                 </Style.TrackAlbumLink>

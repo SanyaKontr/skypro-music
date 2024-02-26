@@ -11,7 +11,7 @@ import {
 const initialState = {
   currentTrack: null,
   allIds: [],
-  isPlaying: null,
+  isPlaying: false,
   tracks: [],
   isMix: false,
 };

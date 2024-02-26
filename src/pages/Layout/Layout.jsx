@@ -15,7 +15,7 @@ return (
     <S.Wrapper>
       <GlobalStyle />
       <S.Container>
-        <S.Main handleLogout={handleLogout}>
+        <S.Main>
         <NavMenu handleLogout={handleLogout} />
           <Outlet currentTrack={currentTrack}/>
           {currentTrack ? <AudioPlayer track={currentTrack} /> : null}
