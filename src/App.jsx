@@ -4,7 +4,7 @@ import { GlobalStyle } from "./App.styles.js";
 import { AppRoutes } from "./routes.jsx";
 import { UserContext } from "./Authorization.js";
 import { useNavigate } from "react-router-dom";
-import { removeCurrentTrack, setCurrentTrack } from "./Store/Actions/Creators/Todo.js";
+import { setCurrentTrack } from "./Store/Actions/Creators/Todo.js";
 import { useDispatch } from "react-redux";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch();
   const handleLogout = () => {  
     localStorage.removeItem("user");
-    dispatch(removeCurrentTrack());
+    dispatch(setCurrentTrack());
     navigate("/login");
     setUser(null);
   };

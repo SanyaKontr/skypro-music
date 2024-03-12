@@ -10,10 +10,10 @@ import {
 } from "../../Store/Actions/Creators/Todo.js";
 import { useDispatch, useSelector } from "react-redux";
 import { isNextTrack } from "../../Store/selectors/todo.js";
-import { setNext, setPause, setPlay, setPrev } from "../../Store/trackSlice.js";
+import { setNext, setPause, setPlay, setPrev, setShuffle } from "../../Store/trackSlice.js";
 
 function AudioPlayer({ track }) {
-const {isPlaying, isShuffled} = useSelector(state=> state.player)
+const {isPlaying, isShuffle} = useSelector(state=> state.player)
   //const [isPlaying, setIsPlaying] = useState(false); 
   const [isMix, setIsMix] = useState(false);
     const isNext = useSelector(isNextTrack);
@@ -26,10 +26,10 @@ const {isPlaying, isShuffled} = useSelector(state=> state.player)
   const handleMix = () => {
     if (!isMix) {
       setIsMix(true);
-      dispatch(mixTracks(true));
+      dispatch(setShuffle(true));
     } else {
       setIsMix(false);
-      dispatch(mixTracks(false));
+      dispatch(setShuffle(false));
     }
   };
 
