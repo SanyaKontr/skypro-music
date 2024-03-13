@@ -1,11 +1,65 @@
 import * as Style from "./TracklistStyle.js";
 import { convertSecToMinAndSec } from "../../helpers.js";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useAddTrackMutation, useDeleteTrackMutation } from "../../Store/api/music.js";
+import { useEffect, useReducer, useState } from 'react'
+import { refreshTokenUser } from "../../Api.js";
+import { setCurrentPlaylist, setCurrentTrack } from "../../Store/trackSlice.js";
 
 
-function Tracklist({ handleTrackPlay, tracks, tracksError, loading }) {
+function Tracklist({ tracks = [], getTracksError, isFavourite = false }) {
+  const dispatch = useDispatch();
+
+  const handleCurrentTrackId = (track) => {
+    dispatch(setCurrentTrack(track));
+    dispatch(setCurrentPlaylist(tracks));
+  };
+
+  const { currentTrack } = useSelector((store) => store.player);
+  const { isPlaying } = useSelector((store) => store.player);
+  const [addTracks, {error: addError, refetch: addRefetch}] = useAddTrackMutation ();
+  const [deleteTracks,  {error: delError, refetch: deleteRefetch}] = useDeleteTrackMutation();
+  const refreshToken = localStorage.getItem("refresh");
+
+  useEffect(() => {
+    console.log(addError);
+    console.log(delError);
+    if (addError && addError.status === 401 || delError && delError.status === 401) {
+      refreshTokenUser(refreshToken)
+        .then((res) => {
+          console.log("Обновленный токен:", res);
+          localStorage.setItem("access", res.access);
+        })
+        .then(() => {
+         if(addError) addRefetch();
+         if(delError) deleteRefetch();
+        })
+        .catch((refreshError) => {
+          console.error("Ошибка при обновлении токена:", refreshError.message);
+        });
+    }
+  }, [addError, delError]);
+
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+  const handleAddTrack = async (e, track) => {
+    e.stopPropagation();
+    addTracks( track.id );
+    console.log(track);
+    track.isLike = !track.isLike;
+    forceUpdate();
+  }
+  const handleDeleteTrack = async (e, track) => {
+    e.stopPropagation();
+    deleteTracks(track.id );
+    console.log(track); 
+    forceUpdate();
+  }
+
   return (
     <Style.CenterblockContent>
-      <Style.ContentTitle>
+  <Style.ContentTitle>
         <Style.PlaylistTitleColCol01>Трек</Style.PlaylistTitleColCol01>
         <Style.PlaylistTitleColCol02>ИСПОЛНИТЕЛЬ</Style.PlaylistTitleColCol02>
         <Style.PlaylistTitleColCol03>АЛЬБОМ</Style.PlaylistTitleColCol03>
@@ -15,86 +69,65 @@ function Tracklist({ handleTrackPlay, tracks, tracksError, loading }) {
           </Style.PlaylistTitleSvg>
         </Style.PlaylistTitleColCol04>
       </Style.ContentTitle>
-      <p>{tracksError}</p>
+      <p>{getTracksError}</p>
+
       <Style.ContentPlaylist>
-        {loading ?
-          ([1, 2, 3, 4, 5, 6, 7, 8, 9].map((item) => (<Style.PlaylistItem>
+      {tracks.length > 0 &&  tracks.map((track) => (
+          <Style.PlaylistItem key={track.id} onClick={() => handleCurrentTrackId(track)}>
             <Style.PlaylistTrack>
               <Style.TrackTitle>
                 <Style.TrackTitleImage>
-                  <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+                  
+                  {currentTrack && currentTrack.id === track.id ? (
+                    <Style.BlinkingDot
+                      $isPlaying={isPlaying}
+                    ></Style.BlinkingDot>
+                  ) : (
+                    <Style.TrackTitleSvg alt="music">
+                      
+                      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
+                      {track.logo}
+                      
+                    </Style.TrackTitleSvg>
+                  )}
                 </Style.TrackTitleImage>
                 <div>
-                  <Style.TrackTitleLink href="http://">
-                    <img
-                      src="/icon/track.svg"
-                      alt="Название трека загружается"
-                    />
-                    <Style.TrackTitleSpan></Style.TrackTitleSpan>
+                  <Style.TrackTitleLink>
+                    {track.name} <Style.TrackTitleSpan></Style.TrackTitleSpan>
                   </Style.TrackTitleLink>
                 </div>
               </Style.TrackTitle>
               <Style.TrackAuthor>
-                <Style.TrackAuthorLink href="http://">
-                  <img
-                    src="/icon/singer.svg"
-                    alt="Имя исполнителя загружается"
-                  />
+                <Style.TrackAuthorLink
+            
+                >
+                  {track.author}
                 </Style.TrackAuthorLink>
               </Style.TrackAuthor>
               <Style.TrackAlbum>
-                <Style.TrackAlbumLink href="http://">
-                  <img
-                    src="/icon/album.svg"
-                    alt="Название альбома загружается"
-                  />
+                <Style.TrackAlbumLink
+                  
+                >
+                  {track.album}
                 </Style.TrackAlbumLink>
               </Style.TrackAlbum>
-            </Style.PlaylistTrack>
-          </Style.PlaylistItem>))
-          )
-          : tracks.length > 0 && tracks.map((track) => (
-            <Style.PlaylistItem key={track.id}>
-              <Style.PlaylistTrack>
-                <Style.TrackTitle>
-                  <Style.TrackTitleImage>
-                    <Style.TrackTitleSvg alt="music">
-                      <use xlinkHref="/icon/sprite.svg#icon-note"></use>
-                      {track.logo}
-                    </Style.TrackTitleSvg>
-                  </Style.TrackTitleImage>
-                  <div>
-                    <Style.TrackTitleLink onClick={() => handleTrackPlay(track)}>
-                      {track.name} <Style.TrackTitleSpan></Style.TrackTitleSpan>
-                    </Style.TrackTitleLink>
-                  </div>
-                </Style.TrackTitle>
-                <Style.TrackAuthor>
-                  <Style.TrackAuthorLink href={track.track_file}>
-                    {track.author}
-                  </Style.TrackAuthorLink>
-                </Style.TrackAuthor>
-                <Style.TrackAlbum>
-                  <Style.TrackAlbumLink href={track.track_file}>
-                    {track.album}
-                  </Style.TrackAlbumLink>
-                </Style.TrackAlbum>
-                <div>
-                  <Style.TrackTimeSvg alt="time">
-                    <use xlinkHref="/icon/sprite.svg#icon-like"></use>
-                  </Style.TrackTimeSvg>
-                  <Style.TrackTimeText>
-                    {convertSecToMinAndSec(track.duration_in_seconds)}
-                  </Style.TrackTimeText>
-                </div>
-              </Style.PlaylistTrack>
-            </Style.PlaylistItem>
-          ))}
+              <div>
+              <Style.TrackTimeSvg 
+                 onClick={(event) => {track.isLike ? handleDeleteTrack(event, track) : handleAddTrack(event, track)}}
+                 alt="time">
 
+
+                   {isFavourite || track.isLike ? (<use xlinkHref="/icon/sprite.svg#icon-liked" />) : (<use xlinkHref="/icon/sprite.svg#icon-like" />)}
+                </Style.TrackTimeSvg>
+                <Style.TrackTimeText>
+                  {convertSecToMinAndSec(track.duration_in_seconds)}
+                </Style.TrackTimeText>
+              </div>
+            </Style.PlaylistTrack>
+          </Style.PlaylistItem>
+        ))}
       </Style.ContentPlaylist>
     </Style.CenterblockContent>
   );
 }
-
-
 export default Tracklist;

@@ -4,22 +4,22 @@ import { GlobalStyle } from "./App.styles.js";
 import { AppRoutes } from "./routes.jsx";
 import { UserContext } from "./Authorization.js";
 import { useNavigate } from "react-router-dom";
+import { removeCurrentTrack } from "./Store/Actions/Creators/Todo.js";
+import { useDispatch } from "react-redux";
 
 function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
-
   const navigate = useNavigate();
-
-  const handleLogout = () => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {  
     localStorage.removeItem("user");
-    navigate("/login");
-    setUser(null)
+    dispatch(removeCurrentTrack());
+    window.location.pathname  = '/login'
+    setUser(null);
   };
-
-
   return (
     <>
-<UserContext.Provider
+      <UserContext.Provider
         value={{ userData: user, changingUserData: setUser }}
       >
         <GlobalStyle />
@@ -27,13 +27,12 @@ function App() {
           <S.Container>
             <AppRoutes
               user={user}
-              setUser={setUser}
               handleLogout={handleLogout}
-            />
-          </S.Container>
-        </S.Wrapper>
-      </UserContext.Provider>
-    </>
-  );
-}
-export default App;
+              />
+              </S.Container>
+            </S.Wrapper>
+          </UserContext.Provider>
+        </>
+      );
+    }
+    export default App;
